@@ -1,0 +1,63 @@
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
+
+  client_body_buffer_size 10K;
+  client_header_buffer_size 1k;
+  client_max_body_size 8m;
+  large_client_header_buffers 2 1k;
+
+  client_body_timeout 12;
+  client_header_timeout 12;
+  keepalive_timeout 15;
+  send_timeout 10;
+
+  error_page 500 502 504 /500.html;
+  error_page 503 @503;
+
+  server_name <%= fetch(:nginx_server_name) %>;
+  root <%= current_path %>/public;
+
+  # Turn on Passenger
+  passenger_enabled on;
+  passenger_ruby <%= passenger_ruby %>;
+
+  location /cable {
+    passenger_app_group_name <%= fetch(:application) %>_action_cable;
+    passenger_force_max_concurrent_requests_per_process 0;
+  }
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  location = /50x.html {
+    root html;
+  }
+
+  location = /404.html {
+    root html;
+  }
+
+  location @503 {
+    error_page 405 = /system/maintenance.html;
+    if (-f $document_root/system/maintenance.html) {
+      rewrite ^(.*)$ /system/maintenance.html break;
+    }
+    rewrite ^(.*)$ /503.html break;
+  }
+
+  if ($request_method !~ ^(GET|HEAD|PUT|PATCH|POST|DELETE|OPTIONS)$ ) {
+    return 405;
+  }
+
+  if (-f $document_root/system/maintenance.html) {
+    return 503;
+  }
+
+  location ~ \.(php|html)$ {
+    return 405;
+  }
+}

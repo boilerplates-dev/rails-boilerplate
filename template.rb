@@ -11,8 +11,20 @@ get_remote 'Gemfile'
 get_remote 'env.example', '.env.example'
 
 after_bundle do
+  say 'Setup kaminari and simple_form'
   generate 'kaminari:config'
   generate 'simple_form:install', '--bootstrap'
+end
+
+after_bundle do
+  say 'Setup Capistrano'
+  get_remote 'config/deploy/templates/nginx.conf.erb'
+  get_remote 'lib/capistrano/passenger/nginx.rake'
+end
+
+after_bundle do
+  say 'Setup New Relic'
+  get_remote 'config/newrelic.yml'
 end
 
 after_bundle do
@@ -22,7 +34,6 @@ after_bundle do
 end
 
 after_bundle do
-
   say 'Init git'
   git :init
   git add: '.'
