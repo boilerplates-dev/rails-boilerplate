@@ -34,6 +34,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
+# A set of common locale data and translations to internationalize
+gem 'rails-i18n', '~> 5.0'
+
 # Monitor
 gem 'newrelic_rpm'
 
