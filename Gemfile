@@ -40,6 +40,10 @@ gem 'rails-i18n', '~> 5.0'
 # Monitor
 gem 'newrelic_rpm'
 
+# Redis for caching and Action Cable in production
+gem 'redis', '~> 3.0'
+gem 'redis-rails'
+
 # Taming Rails' Default Request Logging
 gem 'lograge'
 
