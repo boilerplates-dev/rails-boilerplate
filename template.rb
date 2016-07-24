@@ -23,6 +23,7 @@ end
 after_bundle do
   say 'Setup Capistrano'
   get_remote 'config/deploy.rb'
+  get_remote 'config/deploy/production.rb'
   get_remote 'config/deploy/templates/nginx.conf.erb'
   get_remote 'lib/capistrano/passenger/nginx.rake'
 end
@@ -50,7 +51,7 @@ after_bundle do
   say <<-EOF
 ===============================================================================
 
-    You have initialized your app by rails-boilerplate successfully!
+    You have initialized #{app_name} by rails-boilerplate successfully!
 
 ===============================================================================
 EOF
