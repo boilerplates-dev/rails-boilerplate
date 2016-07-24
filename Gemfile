@@ -16,6 +16,9 @@ gem 'bootstrap-sass'
 # Create forms
 gem 'simple_form'
 
+# Static pages
+gem 'high_voltage'
+
 # Encrypted Password
 gem 'bcrypt'
 
