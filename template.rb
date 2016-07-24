@@ -14,6 +14,9 @@ after_bundle do
   say 'Setup kaminari and simple_form'
   generate 'kaminari:config'
   generate 'simple_form:install', '--bootstrap'
+
+  say 'Setup Rack::Cors'
+  get_remote 'config/initializers/cors.rb'
 end
 
 after_bundle do
@@ -42,5 +45,11 @@ after_bundle do
   say 'Create database'
   rake 'db:create'
 
-  say 'Build successfully!'
+  say <<-EOF
+===============================================================================
+
+    You have initialized your app by rails-boilerplate successfully!
+
+===============================================================================
+EOF
 end
