@@ -9,6 +9,7 @@ end
 
 get_remote 'Gemfile'
 get_remote 'env.example', '.env.example'
+get_remote 'gitignore', '.gitignore'
 
 after_bundle do
   say 'Setup kaminari and simple_form'
