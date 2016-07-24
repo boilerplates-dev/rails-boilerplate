@@ -11,6 +11,13 @@ get_remote 'Gemfile'
 get_remote 'env.example', '.env.example'
 get_remote 'gitignore', '.gitignore'
 
+# Have to stop spring first of all to prevent hangs
+# FYI: https://github.com/rails/spring/issues/265
+after_bundle do
+  get_remote 'config/spring.rb'
+  run 'spring stop'
+end
+
 after_bundle do
   say 'Setup kaminari and simple_form'
   generate 'kaminari:config'
