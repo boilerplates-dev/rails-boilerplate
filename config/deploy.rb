@@ -1,6 +1,6 @@
-set :rbenv_ruby, "#{File.read('.ruby-version').chomp}"
+set :rbenv_ruby, File.read('.ruby-version').chomp
 set :rbenv_type, :user
-set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+set :rbenv_map_bins, %w(rake gem bundle ruby rails)
 
 set :passenger_ruby, -> { "#{fetch(:rbenv_ruby_dir)}/bin/ruby" }
 
@@ -16,10 +16,10 @@ set :deploy_to, -> { "/var/www/#{fetch(:application)}_#{fetch(:stage)}" }
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{.env}
+set :linked_files, %w(.env)
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets}
+set :linked_dirs, %w(bin log tmp/pids tmp/cache tmp/sockets)
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5

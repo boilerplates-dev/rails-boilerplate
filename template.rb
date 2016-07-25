@@ -30,6 +30,7 @@ end
 
 after_bundle do
   say 'Setup Capistrano'
+  get_remote 'Capfile'
   get_remote 'config/deploy.rb'
   get_remote 'config/deploy/production.rb'
   get_remote 'config/deploy/templates/nginx.conf.erb'
