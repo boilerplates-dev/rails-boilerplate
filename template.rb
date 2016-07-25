@@ -7,6 +7,7 @@ def get_remote(src, dest = nil)
   get(remote_file, dest)
 end
 
+get_remote 'ruby-version', '.ruby-version'
 get_remote 'Gemfile'
 get_remote 'env.example', '.env.example'
 get_remote 'gitignore', '.gitignore'
