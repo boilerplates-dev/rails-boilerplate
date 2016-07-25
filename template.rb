@@ -9,10 +9,8 @@ end
 
 get_remote 'ruby-version', '.ruby-version'
 get_remote 'Gemfile'
-get_remote 'env.example', '.env.example'
-get_remote 'gitignore', '.gitignore'
 
-# Have to stop spring first of all to prevent hangs
+# Stop spring first of all to prevent hangs
 # FYI: https://github.com/rails/spring/issues/265
 after_bundle do
   get_remote 'config/spring.rb'
@@ -23,7 +21,9 @@ after_bundle do
   say 'Setup kaminari and simple_form'
   generate 'kaminari:config'
   generate 'simple_form:install', '--bootstrap'
+end
 
+after_bundle do
   say 'Setup Rack::Cors'
   get_remote 'config/initializers/cors.rb'
 end
@@ -42,20 +42,27 @@ after_bundle do
 end
 
 after_bundle do
-  say 'Create home page'
-  generate(:controller, 'home index')
-  route "root to: 'home#index'"
-end
-
-after_bundle do
-  say 'Init git'
+  say 'Initialize git'
+  get_remote 'gitignore', '.gitignore'
   git :init
   git add: '.'
   git commit: "-a -m 'Initial commit'"
+end
 
+after_bundle do
+  say 'Dotenv'
+  get_remote 'env.example', '.env.example'
+  run 'cp .env.example .env'
+  say 'Please add your application configuration to your .env file in the root \
+of your project'
+end
+
+after_bundle do
   say 'Create database'
   rake 'db:create'
+end
 
+after_bundle do
   say <<-EOF
 ===============================================================================
 
