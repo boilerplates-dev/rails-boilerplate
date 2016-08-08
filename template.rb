@@ -18,8 +18,21 @@ after_bundle do
 end
 
 after_bundle do
-  say 'Setup kaminari and simple_form'
+  say 'Setup Bootstrap 3'
+  remove_file 'app/assets/stylesheets/application.css'
+  get_remote 'app/assets/stylesheets/application.scss'
+  inject_into_file 'app/assets/javascripts/application.js', after: "//= require jquery\n" do
+    "//= require bootstrap-sprockets\n"
+  end
+end
+
+after_bundle do
+  say 'Steup kaminari'
   generate 'kaminari:config'
+end
+
+after_bundle do
+  say 'Setup simple_form'
   generate 'simple_form:install', '--bootstrap'
 end
 
