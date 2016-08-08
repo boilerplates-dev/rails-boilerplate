@@ -29,6 +29,7 @@ end
 after_bundle do
   say 'Steup kaminari'
   generate 'kaminari:config'
+  generate 'kaminari:views', 'bootstrap3'
 end
 
 after_bundle do
